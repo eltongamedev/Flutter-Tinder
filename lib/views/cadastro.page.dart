@@ -67,7 +67,7 @@ class _CadastroPageState extends State<CadastroPage> {
                     "assets/images/google.png",
                     "ENTRAR COM O GOOGLE",
                     () async {
-                      await viewModel.loginWithGoogle();
+                      await viewModel.login(GoogleAuthService());
                     },
                   ),
 
