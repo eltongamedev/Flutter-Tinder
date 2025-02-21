@@ -39,7 +39,8 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
 ## 📌 Status do Projeto (Atualizado em: 21/02/2025)
 - [x] Configuração inicial (19/02/2025)
 - [x] Criação das primeiras telas (19/02/2025)
-- [x] Adição de documentação do diagrama de fluxo de login com o Google (19/02/2025)
+- [x] Implementação de funcionalidades (19/02/2025)
+- [x] Adição de documentação do diagrama de fluxo de login com o Google (21/02/2025)
 - [x] Aplicação dos princípios SOLID ao projeto (21/02/2025)
 
 
