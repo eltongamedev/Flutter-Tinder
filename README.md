@@ -1,10 +1,11 @@
-# 📱 Meu Projeto Flutter 🚀
+# 📱 Projeto Tinder - Flutter 🚀
 
-Este é um projeto Flutter onde estou desenvolvendo um app seguindo o padrão **MVVM**.
+Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o padrão **MVVM** e aplicando os princípios **SOLID** para garantir um código mais modular, escalável e de fácil manutenção.
 
 ## 🛠 Tecnologias Utilizadas
 - **Flutter**  
 - **Dart**  
+- **Firebase**
 - Outras dependências podem ser adicionadas conforme o desenvolvimento.
 
 ## 🚀 Como Rodar o Projeto
@@ -35,10 +36,12 @@ Este é um projeto Flutter onde estou desenvolvendo um app seguindo o padrão **
   main.dart      # Arquivo principal do app
 ```
 
-## 📌 Status do Projeto
-- [x] Configuração inicial  
-- [x] Criação das primeiras telas  
-- [x] Implementação de funcionalidades  
+## 📌 Status do Projeto (Atualizado em: 21/02/2025)
+- [x] Configuração inicial (19/02/2025)
+- [x] Criação das primeiras telas (19/02/2025)
+- [x] Adição de documentação do diagrama de fluxo de login com o Google (19/02/2025)
+- [x] Aplicação dos princípios SOLID ao projeto (21/02/2025)
+
 
 ## 📄 Licença
 Este projeto está sob a licença **MIT**.
