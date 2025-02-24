@@ -41,6 +41,11 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
 - [x] Criação das primeiras telas (19/02/2025)
 - [x] Adição de documentação do diagrama de fluxo de login com o Google (19/02/2025)
 - [x] Aplicação dos princípios SOLID ao projeto (21/02/2025)
+- [x] Código organizado e integrado com Firestore. (24/02/2025)
+- [x] Login e logout funcionando com gerenciamento de estado via Provider. (24/02/2025)
+- [x] Usuário salvo no Firestore após login. (24/02/2025)
+- [x] Exibição do nome do usuário na interface. (24/02/2025)
+- [x] Ajuste do login com Google para sempre exibir a seleção de contas (24/02/2025)
 
 
 ## 📄 Licença
