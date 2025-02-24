@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/login_viewmodel.dart';
+import '../services/google_auth_service.dart';
+import './user_create_profile_view.dart';
 
 class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
@@ -11,14 +13,12 @@ class CadastroPage extends StatefulWidget {
 
 class _CadastroPageState extends State<CadastroPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<LoginViewModel>(context);
 
     return GestureDetector(
-      // O GestureDetector detecta gestos do usuário, como toques na tela.
       onTap: () {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
@@ -29,7 +29,6 @@ class _CadastroPageState extends State<CadastroPage> {
         body: Stack(
           children: [
             Container(
-              // Decoration de Fundo
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
@@ -43,7 +42,6 @@ class _CadastroPageState extends State<CadastroPage> {
             SafeArea(
               child: Column(
                 children: [
-                  // Logo Tinder
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(
@@ -53,7 +51,6 @@ class _CadastroPageState extends State<CadastroPage> {
                     ),
                   ),
                   SizedBox(height: 100),
-                  // Texto de Póliticas
                   Text(
                     style: TextStyle(
                       color: Colors.white,
@@ -68,18 +65,33 @@ class _CadastroPageState extends State<CadastroPage> {
                     "ENTRAR COM O GOOGLE",
                     () async {
                       await viewModel.login(GoogleAuthService());
+                      // Verifica se o login foi bem-sucedido
+                      if (viewModel.isLoggedIn) {
+                        // Navega para a próxima página
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => UserCreateProfileView(),
+                          ),
+                        );
+                      } else {
+                        // Exibe uma mensagem de erro
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Erro ao fazer login')),
+                        );
+                      }
                     },
                   ),
-
                   SizedBox(height: 20),
                   buildButton(
                     "assets/images/facebook.png",
                     "ENTRAR COM O FACEBOOK",
+                    () {}, // Adicione a lógica do Facebook aqui
                   ),
                   SizedBox(height: 20),
                   buildButton(
                     "assets/images/message.png",
                     "ENTRAR COM TELEFONE",
+                    () {}, // Adicione a lógica do telefone aqui
                   ),
                 ],
               ),
@@ -101,8 +113,7 @@ class _CadastroPageState extends State<CadastroPage> {
         width: 300,
         height: 50,
         child: TextButton(
-          onPressed:
-              onPressed ?? () {}, // Se não passar nada, o botão não faz nada
+          onPressed: onPressed ?? () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

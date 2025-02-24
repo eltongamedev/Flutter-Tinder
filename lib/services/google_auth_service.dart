@@ -10,6 +10,8 @@ class GoogleAuthService implements AuthServiceInterface {
   @override
   Future<UserModel?> signIn() async {  // O método signIn vai tentar fazer o login com o Google.
     try {
+      await GoogleSignIn().signOut(); // Desloga do Google antes de iniciar o login
+
       // O GoogleSignIn().signIn() abre a janela do Google pra o usuário logar
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
