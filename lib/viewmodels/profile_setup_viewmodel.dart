@@ -18,6 +18,12 @@ class ProfileSetupViewModel extends ChangeNotifier {
       type: StepType.age,
     ),
     ProfileStep(
+      title: "Qual é o seu gênero?",
+      subtitle: "Conte-nos sobre seu gênero",
+      type: StepType.gender,
+      gender: ["Masculino", "Feminino"]
+    ),
+    ProfileStep(
       title: "Quais são seus interesses?",
       subtitle: "Escolha pelo menos um",
       type: StepType.checkbox,

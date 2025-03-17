@@ -50,6 +50,7 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
 - [x] Estruturação inicial das páginas para criação de perfil (17/03/2025)
 - [x] Aprimoramento da tela "Qual é o seu nome?" (17/03/2025)
 - [x] Aprimoramento da tela "Qual é a sua idade?" (17/03/2025)
+- [x] Aprimoramento da tela "Qual é o seu gênero?" (17/03/2025)
 
 
 ## 📄 Licença

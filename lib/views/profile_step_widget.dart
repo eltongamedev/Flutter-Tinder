@@ -16,6 +16,8 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
   String? selectedImage;
   int _currentAge = 18; // Idade inicial para o carrossel
   final PageController _pageController = PageController(viewportFraction: 0.3);
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +124,77 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
                   ),
                 ),
               ],
+            ),
+
+          if (widget.step.type == StepType.gender)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMaleSelected = !isMaleSelected;
+                        if (isMaleSelected) isFemaleSelected = false;
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor:
+                          isMaleSelected
+                              ? Color(0xffFF5069)
+                              : Colors.grey.shade300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.male,
+                            size: 50,
+                            color: isMaleSelected ? Colors.white : Colors.black,
+                          ),
+                          Text(
+                            "Masculino",
+                            style: TextStyle(
+                              color:
+                                  isMaleSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isFemaleSelected = !isFemaleSelected;
+                        if (isFemaleSelected) isMaleSelected = false;
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor:
+                          isFemaleSelected
+                              ? Color(0xffFF5069)
+                              : Colors.grey.shade300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.female,
+                            size: 50,
+                            color: isFemaleSelected ? Colors.white : Colors.black,
+                          ),
+                          Text("Feminino",
+                          style: TextStyle(color: isFemaleSelected ? Colors.white : Colors.black),)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
           if (widget.step.type == StepType.checkbox)
