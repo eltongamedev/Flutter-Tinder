@@ -47,6 +47,9 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
 - [x] Usuário salvo no Firestore após login. (24/02/2025)
 - [x] Exibição do nome do usuário na interface. (24/02/2025)
 - [x] Ajuste do login com Google para sempre exibir a seleção de contas (24/02/2025)
+- [x] Estruturação inicial das páginas para criação de perfil (17/03/2025)
+- [x] Aprimoramento da tela "Qual é o seu nome?" (17/03/2025)
+- [x] Aprimoramento da tela "Qual é a sua idade?" (17/03/2025)
 
 
 ## 📄 Licença

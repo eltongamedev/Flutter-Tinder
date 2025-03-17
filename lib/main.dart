@@ -4,7 +4,7 @@ import 'package:tinder/services/user_service.dart';
 import 'package:tinder/views/cadastro.page.dart';
 import 'package:tinder/viewmodels/login_viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:tinder/views/profile_setup.dart';
+import 'package:tinder/views/profile_setup_view.dart';
 import 'firebase_options.dart';
 import 'services/logout_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const ProfileSetup(),
+      home: const ProfileSetupView(),
     );
   }
 }
