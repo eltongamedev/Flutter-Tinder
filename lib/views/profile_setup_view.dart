@@ -2,63 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/profile_setup_viewmodel.dart';
 import 'profile_step_widget.dart';
+import '../viewmodels/user_profile/user_name_view_model.dart';
 
 class ProfileSetupView extends StatelessWidget {
   const ProfileSetupView({super.key});
 
   @override
+  // Widget build(BuildContext context) {
+  //   return ChangeNotifierProvider(
+  //     create: (_) => ProfileSetupViewModel(),
+  //     child: Consumer<ProfileSetupViewModel>(
+  //       builder: (context, viewModel, child) {
+  //         return Scaffold(
+  //           body: Column(
+  //             children: [
+  //               _buildProgressIndicator(viewModel),
+  //               _buildPageView(viewModel),
+  //               _buildContinueButton(viewModel),
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ProfileSetupViewModel(),
-      child: Consumer<ProfileSetupViewModel>(
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            body: Column(
-              children: [
-                _buildProgressIndicator(viewModel),
-                _buildPageView(viewModel),
-                _buildContinueButton(context, viewModel),
-              ],
-            ),
-          );
-        },
+    // Remove o ChangeNotifierProvider e acesse diretamente
+    final viewModel = Provider.of<ProfileSetupViewModel>(context);
+
+    return Scaffold(
+      body: Column(
+        children: [
+          _buildProgressIndicator(viewModel),
+          _buildPageView(viewModel),
+          _buildContinueButton(viewModel),
+        ],
       ),
     );
   }
 
   Widget _buildProgressIndicator(ProfileSetupViewModel viewModel) {
     return Padding(
-  padding: const EdgeInsets.all(16.0),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,  // Centraliza todos os elementos horizontalmente
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      // Setinha no canto esquerdo
-      IconButton(
-        icon: const Icon(Icons.arrow_back),  // A setinha para voltar
-        onPressed: () {
-          if (viewModel.currentPage > 0) {
-            viewModel.prevPage();
-          }
-        },
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              viewModel.prevPage();
+            },
+          ),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: LinearProgressIndicator(
+                value: (viewModel.currentPage + 1) / viewModel.totalPages,
+                backgroundColor: const Color(0xffFFE9F1),
+                color: const Color(0xffFF5069),
+                minHeight: 12,
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+          ),
+        ],
       ),
-      // Barra de progresso centralizada
-      Container(
-        width: 180,  // Ajuste o tamanho da barra de progresso
-        margin: const EdgeInsets.symmetric(horizontal: 50),  // Ajuste o espaço entre a seta e a barra
-        child: LinearProgressIndicator(
-          value: (viewModel.currentPage + 1) / viewModel.totalPages,
-          backgroundColor: const Color(0xffFFE9F1),
-          color: const Color(0xffFF5069),
-          minHeight: 12,
-          borderRadius: BorderRadius.circular(50),
-        ),
-      ),
-      Spacer(),
-    ],
-  ),
-);
-
+    );
   }
 
   Widget _buildPageView(ProfileSetupViewModel viewModel) {
@@ -67,8 +77,7 @@ class ProfileSetupView extends StatelessWidget {
         controller: viewModel.pageController,
         itemCount: viewModel.totalPages,
         onPageChanged: (index) {
-          viewModel.currentPage = index;
-          viewModel.notifyListeners();
+          viewModel.setPage(index);
         },
         itemBuilder: (context, index) {
           return ProfileStepWidget(step: viewModel.steps[index]);
@@ -77,10 +86,7 @@ class ProfileSetupView extends StatelessWidget {
     );
   }
 
-  Widget _buildContinueButton(
-    BuildContext context,
-    ProfileSetupViewModel viewModel,
-  ) {
+  Widget _buildContinueButton(ProfileSetupViewModel viewModel) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
@@ -94,16 +100,7 @@ class ProfileSetupView extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            // Lógica para navegar para a próxima etapa ou finalizar o cadastro
-            if (viewModel.currentPage < viewModel.totalPages - 1) {
-              viewModel.pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            } else {
-              // Finalizar o cadastro
-              // Navigator.push(...) ou outra ação
-            }
+            viewModel.nextPage();
           },
           child: const Text(
             "Continue",

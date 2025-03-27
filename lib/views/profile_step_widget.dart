@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/profile_step.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../viewmodels/user_profile/user_name_view_model.dart';
+import 'package:provider/provider.dart';
+
 
 class ProfileStepWidget extends StatefulWidget {
   final ProfileStep step;
@@ -9,6 +12,7 @@ class ProfileStepWidget extends StatefulWidget {
 
   @override
   ProfileStepWidgetState createState() => ProfileStepWidgetState();
+  
 }
 
 class ProfileStepWidgetState extends State<ProfileStepWidget> {
@@ -16,6 +20,10 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
   String? selectedImage;
   int _currentAge = 18; // Idade inicial para o carrossel
   final PageController _pageController = PageController(viewportFraction: 0.3);
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +32,8 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
       83,
       (index) => index + 18,
     ); // 83 itens (18 a 100)
+
+    final viewModel = Provider.of<UserNameViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -49,6 +59,7 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
           // Renderiza dinamicamente o campo correto
           if (widget.step.type == StepType.text)
             TextField(
+              controller: viewModel.nameController,
               decoration: InputDecoration(
                 hintText: widget.step.hintText,
                 border: OutlineInputBorder(
@@ -64,6 +75,9 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
                   borderSide: BorderSide(color: Color(0xffFF5069)),
                 ),
               ),
+              onChanged: (value) {
+                viewModel.setUserName(value);
+              },
             ),
 
           if (widget.step.type == StepType.age)
@@ -124,22 +138,129 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
               ],
             ),
 
+          if (widget.step.type == StepType.gender)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMaleSelected = !isMaleSelected;
+                        if (isMaleSelected) isFemaleSelected = false;
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor:
+                          isMaleSelected
+                              ? Color(0xffFF5069)
+                              : Colors.grey.shade300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.male,
+                            size: 50,
+                            color: isMaleSelected ? Colors.white : Colors.black,
+                          ),
+                          Text(
+                            "Masculino",
+                            style: TextStyle(
+                              color:
+                                  isMaleSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isFemaleSelected = !isFemaleSelected;
+                        if (isFemaleSelected) isMaleSelected = false;
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor:
+                          isFemaleSelected
+                              ? Color(0xffFF5069)
+                              : Colors.grey.shade300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.female,
+                            size: 50,
+                            color:
+                                isFemaleSelected ? Colors.white : Colors.black,
+                          ),
+                          Text(
+                            "Feminino",
+                            style: TextStyle(
+                              color:
+                                  isFemaleSelected
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
           if (widget.step.type == StepType.checkbox)
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children:
                   widget.step.options!.map((option) {
-                    return CheckboxListTile(
-                      title: Text(option),
-                      value: selectedOptions.contains(option),
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value == true) {
-                            selectedOptions.add(option);
-                          } else {
-                            selectedOptions.remove(option);
-                          }
-                        });
-                      },
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ), // Espaçamento entre os botões
+                      child: SizedBox(
+                        width: 200, // Largura fixa para todos os botões
+                        height: 50, // Altura fixa para manter a consistência
+                        child: ChoiceChip(
+                          label: Text(option),
+                          selected: selectedOptions.contains(option),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              selectedOptions
+                                  .clear(); // Garante que apenas uma opção seja selecionada
+                              if (selected) {
+                                selectedOptions.add(option);
+                              }
+                            });
+                          },
+                          selectedColor: const Color(
+                            0xffFF5069,
+                          ), // Cor do botão selecionado
+                          backgroundColor:
+                              Colors.grey[200], // Cor do botão não selecionado
+                          labelStyle: TextStyle(
+                            color:
+                                selectedOptions.contains(option)
+                                    ? Colors.white
+                                    : Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                          ), // Ajuste do tamanho interno do botão
+                        ),
+                      ),
                     );
                   }).toList(),
             ),

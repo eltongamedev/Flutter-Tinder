@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/profile_step.dart';
 
+
 class ProfileSetupViewModel extends ChangeNotifier {
   final PageController pageController = PageController();
-  int currentPage = 0;
+  int _currentPage = 0;
 
   final List<ProfileStep> steps = [
     ProfileStep(
@@ -18,10 +19,21 @@ class ProfileSetupViewModel extends ChangeNotifier {
       type: StepType.age,
     ),
     ProfileStep(
-      title: "Quais são seus interesses?",
-      subtitle: "Escolha pelo menos um",
+      title: "Qual é o seu gênero?",
+      subtitle: "Conte-nos sobre seu gênero",
+      type: StepType.gender,
+      gender: ["Masculino", "Feminino"],
+    ),
+    ProfileStep(
+      title: "Eu Estou Procurando Por...",
+      subtitle: "Conte-nos as suas preferências",
       type: StepType.checkbox,
-      options: ["Música", "Filmes", "Jogos", "Esportes"],
+      options: [
+        "Relacionamento Sério",
+        "Algo Casual",
+        "Não Tenho Certeza",
+        "Prefiro Não Dizer",
+      ],
     ),
     ProfileStep(
       title: "Escolha seu avatar",
@@ -31,27 +43,33 @@ class ProfileSetupViewModel extends ChangeNotifier {
     ),
   ];
 
+  int get currentPage => _currentPage;
   int get totalPages => steps.length;
 
   void nextPage() {
-    if (currentPage < totalPages - 1) {
+    if (_currentPage < totalPages - 1) {
+      _currentPage++;
       pageController.nextPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      currentPage++;
       notifyListeners();
     }
   }
 
   void prevPage() {
-    if (currentPage > 0) {
+    if (_currentPage > 0) {
+      _currentPage--;
       pageController.previousPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      currentPage--;
       notifyListeners();
     }
+  }
+
+  void setPage(int index) {
+    _currentPage = index;
+    notifyListeners();
   }
 }

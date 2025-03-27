@@ -1,22 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user_model.dart';
+// services/user_service.dart
+import '../data/repositories/i_user_repository.dart';
+import '../models/user_profile/user_model.dart';
 
 class UserService {
-  final FirebaseFirestore _firestore;
+  final IUserRepository _userRepository;
 
-  UserService(this._firestore);
+  UserService(this._userRepository);
 
-  Future<void> checkAndAddUser(UserModel user) async {
-    DocumentReference userRef = _firestore.collection('users').doc(user.uid);
-    DocumentSnapshot doc = await userRef.get();
-
-    if (!doc.exists) {
-      await userRef.set({
-        'name': user.name,
-        'email': user.email,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-    }
+  Future<void> updateUserProfile(UserModel user) async {
+    await _userRepository.updateUserData(user.uid, user.toMap());
   }
 }
-
