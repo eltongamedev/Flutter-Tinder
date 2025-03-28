@@ -36,7 +36,7 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
   main.dart      # Arquivo principal do app
 ```
 
-## 📌 Status do Projeto (Atualizado em: 24/02/2025)
+## 📌 Status do Projeto (Atualizado em: 28/03/2025)
 - [x] Configuração inicial (19/02/2025)
 - [x] Criação das primeiras telas (19/02/2025)
 - [x] Implementação de funcionalidades (19/02/2025)
@@ -51,6 +51,8 @@ Este é um projeto Flutter onde estou desenvolvendo o clone do Tinder seguindo o
 - [x] Aprimoramento da tela "Qual é o seu nome?" (17/03/2025)
 - [x] Aprimoramento da tela "Qual é a sua idade?" (17/03/2025)
 - [x] Aprimoramento da tela "Qual é o seu gênero?" (17/03/2025)
+- [x] Usuário adiciona o nome ao perfil (28/03/2025)
+- [x] Refatorando código e aplicando o padrão SOLID (28/03/2025)
 
 
 ## 📄 Licença
