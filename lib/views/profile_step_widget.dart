@@ -3,6 +3,7 @@ import '../models/profile_step.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/user_profile/user_name_view_model.dart';
 import 'package:provider/provider.dart';
+import '../viewmodels/user_profile/user_profile_view_model.dart';
 
 
 class ProfileStepWidget extends StatefulWidget {
@@ -34,6 +35,7 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
     ); // 83 itens (18 a 100)
 
     final viewModel = Provider.of<UserNameViewModel>(context);
+    final userProfileViewModel = Provider.of<UserProfileViewModel>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -77,6 +79,7 @@ class ProfileStepWidgetState extends State<ProfileStepWidget> {
               ),
               onChanged: (value) {
                 viewModel.setUserName(value);
+                
               },
             ),
 

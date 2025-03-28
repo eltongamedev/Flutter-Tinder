@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tinder/views/profile_setup_view.dart';
 import '../viewmodels/login_viewmodel.dart';
 import '../services/google_auth_service.dart';
 import './user_create_profile_view.dart';
@@ -70,7 +71,7 @@ class _CadastroPageState extends State<CadastroPage> {
                         // Navega para a próxima página
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => UserCreateProfileView(),
+                            builder: (context) => ProfileSetupView(),
                           ),
                         );
                       } else {

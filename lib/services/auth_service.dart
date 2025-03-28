@@ -1,6 +1,11 @@
-import '../models/user_profile/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-/// Interface para serviços de autenticação
-abstract class AuthServiceInterface {
-  Future<UserModel?> signIn();
+class AuthService {
+  final FirebaseAuth _authService = FirebaseAuth.instance;
+
+  // Método para obter o UID do usuário logado
+  String? getCurrentUserUid() {
+    final user = _authService.currentUser;
+    return user?.uid; // Retorna o UID do usuário logado ou null
+  }
 }

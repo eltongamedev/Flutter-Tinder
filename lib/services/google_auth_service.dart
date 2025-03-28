@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';  // Firebase Auth pra autenticação
 import 'package:google_sign_in/google_sign_in.dart';  // Google SignIn pra integração com Google
 import '../models/user_profile/user_model.dart';  // Modelo do usuário que vai armazenar os dados do usuário logado
-import 'auth_service.dart';  // Interface que estamos implementando (AuthServiceInterface)
+import 'auth_service_interface.dart';  // Interface que estamos implementando (AuthServiceInterface)
 
 /// Serviço de autenticação do Google
 class GoogleAuthService implements AuthServiceInterface {

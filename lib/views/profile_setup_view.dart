@@ -2,41 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/profile_setup_viewmodel.dart';
 import 'profile_step_widget.dart';
-import '../viewmodels/user_profile/user_name_view_model.dart';
+import '../viewmodels/user_profile/user_profile_view_model.dart';
 
 class ProfileSetupView extends StatelessWidget {
   const ProfileSetupView({super.key});
 
   @override
-  // Widget build(BuildContext context) {
-  //   return ChangeNotifierProvider(
-  //     create: (_) => ProfileSetupViewModel(),
-  //     child: Consumer<ProfileSetupViewModel>(
-  //       builder: (context, viewModel, child) {
-  //         return Scaffold(
-  //           body: Column(
-  //             children: [
-  //               _buildProgressIndicator(viewModel),
-  //               _buildPageView(viewModel),
-  //               _buildContinueButton(viewModel),
-  //             ],
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
-  @override
   Widget build(BuildContext context) {
-    // Remove o ChangeNotifierProvider e acesse diretamente
-    final viewModel = Provider.of<ProfileSetupViewModel>(context);
+    final setupViewModel = Provider.of<ProfileSetupViewModel>(context);
+    final profileViewModel = Provider.of<UserProfileViewModel>(context);
 
     return Scaffold(
       body: Column(
         children: [
-          _buildProgressIndicator(viewModel),
-          _buildPageView(viewModel),
-          _buildContinueButton(viewModel),
+          _buildProgressIndicator(setupViewModel),
+          _buildPageView(setupViewModel),
+          _buildContinueButton(setupViewModel, profileViewModel),
         ],
       ),
     );
@@ -50,9 +31,7 @@ class ProfileSetupView extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              viewModel.prevPage();
-            },
+            onPressed: viewModel.prevPage,
           ),
           Expanded(
             child: Container(
@@ -76,9 +55,7 @@ class ProfileSetupView extends StatelessWidget {
       child: PageView.builder(
         controller: viewModel.pageController,
         itemCount: viewModel.totalPages,
-        onPageChanged: (index) {
-          viewModel.setPage(index);
-        },
+        onPageChanged: viewModel.setPage,
         itemBuilder: (context, index) {
           return ProfileStepWidget(step: viewModel.steps[index]);
         },
@@ -86,7 +63,10 @@ class ProfileSetupView extends StatelessWidget {
     );
   }
 
-  Widget _buildContinueButton(ProfileSetupViewModel viewModel) {
+  Widget _buildContinueButton(
+    ProfileSetupViewModel setupVm, 
+    UserProfileViewModel profileVm
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
@@ -99,8 +79,9 @@ class ProfileSetupView extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          onPressed: () {
-            viewModel.nextPage();
+          onPressed: () async {
+            setupVm.nextPage();
+            await profileVm.saveUserProfile();
           },
           child: const Text(
             "Continue",
